@@ -11,7 +11,7 @@ use std::os::unix::net::UnixStream;
 use std::convert::TryInto;
 
 pub mod types;
-use types::*;
+pub use types::*;
 
 pub trait IPC {
     fn run_command(&mut self, payload: String) -> Vec<Result<(), String>>;
