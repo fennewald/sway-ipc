@@ -53,9 +53,9 @@ pub struct Output {
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum SubpixelHinting { RGB, BGR, VRGB, VBGR, None, Unknown }
+pub enum SubpixelHinting { RGB, BGR, VRGB, VBGR, None, Unknown }
 #[derive(Deserialize, Debug, PartialEq)]
-enum OutputTransform {
+pub enum OutputTransform {
     #[serde(rename = "normal")]
     Normal,
     #[serde(rename = "90")]
@@ -89,7 +89,7 @@ pub struct Node {
     pub current_border_width: u8,
     pub layout: NodeLayout,
     pub orientation: NodeOrientation,
-    pub //percent: Option<f64>,
+    //percent: Option<f64>,
     pub rect: Rectangle,
     pub window_rect: Rectangle,
     pub deco_rect: Rectangle,
@@ -110,7 +110,7 @@ pub struct Node {
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum NodeType {
+pub enum NodeType {
     Root,
     Output,
     Workspace,
@@ -120,17 +120,17 @@ enum NodeType {
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum NodeBorder { Normal, None, Pixel, Csd }
+pub enum NodeBorder { Normal, None, Pixel, Csd }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum NodeLayout { None, Splith, Splitv, Stacked, Tabbed, Output }
+pub enum NodeLayout { None, Splith, Splitv, Stacked, Tabbed, Output }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum NodeOrientation { Vertical, Horizontal, None }
+pub enum NodeOrientation { Vertical, Horizontal, None }
 #[derive(Deserialize_repr, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
 #[repr(u8)]
-enum NodeFullscreenMode { None = 0, Full = 1, Global = 2 }
+pub enum NodeFullscreenMode { None = 0, Full = 1, Global = 2 }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct NodeWindowProperties {
     pub class: String,
@@ -157,10 +157,10 @@ pub struct Bar {
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum BarMode { Dock, Hide, Invisible }
+pub enum BarMode { Dock, Hide, Invisible }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
-enum BarPosition { Bottom, Top }
+pub enum BarPosition { Bottom, Top }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct BarColors {
     pub background: Color,
