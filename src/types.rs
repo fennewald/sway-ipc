@@ -17,39 +17,39 @@ pub struct CommandResult {
 // Get Workspaces
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Workspace {
-    num: i64,
-    name: String,
-    visible: bool,
-    focused: bool,
-    urgent: bool,
-    output: String,
-    rect: Rectangle
+    pub num: i64,
+    pub name: String,
+    pub visible: bool,
+    pub focused: bool,
+    pub urgent: bool,
+    pub output: String,
+    pub rect: Rectangle
 }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Rectangle {
-    x: u64,
-    y: u64,
-    width: u64,
-    height: u64
+    pub x: u64,
+    pub y: u64,
+    pub width: u64,
+    pub height: u64
 }
 
 // Get Output
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Output {
-    name: String,
-    make: String,
-    model: String,
-    serial: String,
-    active: bool,
-    dpms: bool,
-    primary: bool,
-    scale: f64,
-    subpixel_hinting: SubpixelHinting,
-    transform: OutputTransform,
-    current_workspace: String,
-    modes: Vec<OutputMode>,
-    current_mode: OutputMode,
-    rect: Rectangle
+    pub name: String,
+    pub make: String,
+    pub model: String,
+    pub serial: String,
+    pub active: bool,
+    pub dpms: bool,
+    pub primary: bool,
+    pub scale: f64,
+    pub subpixel_hinting: SubpixelHinting,
+    pub transform: OutputTransform,
+    pub current_workspace: String,
+    pub modes: Vec<OutputMode>,
+    pub current_mode: OutputMode,
+    pub rect: Rectangle
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -73,40 +73,40 @@ enum OutputTransform {
 }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct OutputMode {
-    width: u64,
-    height: u64,
-    refresh: u64
+    pub width: u64,
+    pub height: u64,
+    pub refresh: u64
 }
 
 // Get Tree
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Node {
-    id: u64,
-    name: String,
+    pub id: u64,
+    pub name: String,
     #[serde(rename = "type")]
-    node_type: NodeType,
-    border: NodeBorder,
-    current_border_width: u8,
-    layout: NodeLayout,
-    orientation: NodeOrientation,
-    //percent: Option<f64>,
-    rect: Rectangle,
-    window_rect: Rectangle,
-    deco_rect: Rectangle,
-    geometry: Rectangle,
-    urgent: bool,
-    sticky: bool,
-    focused: bool,
-    focus: Vec<u64>,
-    nodes: Vec<Node>,
-    floating_nodes: Vec<Node>,
-    representation: Option<String>,
-    fullscreen_mode: Option<NodeFullscreenMode>,
-    app_id: Option<String>,
-    pid: Option<u64>,
-    visible: Option<bool>,
-    window: Option<u64>,
-    window_properties: Option<NodeWindowProperties>
+    pub node_type: NodeType,
+    pub border: NodeBorder,
+    pub current_border_width: u8,
+    pub layout: NodeLayout,
+    pub orientation: NodeOrientation,
+    pub //percent: Option<f64>,
+    pub rect: Rectangle,
+    pub window_rect: Rectangle,
+    pub deco_rect: Rectangle,
+    pub geometry: Rectangle,
+    pub urgent: bool,
+    pub sticky: bool,
+    pub focused: bool,
+    pub focus: Vec<u64>,
+    pub nodes: Vec<Node>,
+    pub floating_nodes: Vec<Node>,
+    pub representation: Option<String>,
+    pub fullscreen_mode: Option<NodeFullscreenMode>,
+    pub app_id: Option<String>,
+    pub pid: Option<u64>,
+    pub visible: Option<bool>,
+    pub window: Option<u64>,
+    pub window_properties: Option<NodeWindowProperties>
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -133,27 +133,27 @@ enum NodeOrientation { Vertical, Horizontal, None }
 enum NodeFullscreenMode { None = 0, Full = 1, Global = 2 }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct NodeWindowProperties {
-    class: String,
-    instance: String,
-    title: String
-//    transient_for: unknown
+    pub class: String,
+    pub instance: String,
+    pub title: String
+//  pub   transient_for: unknown
 }
 
 // Get Bar Config
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Bar {
-    id: String,
-    mode: BarMode,
-    position: BarPosition,
-    status_command: String,
-    font: String,
-    workspace_buttons: bool,
-    binding_mode_indicator: bool,
-    colors: BarColors,
-    gaps: BarGaps,
-    bar_height: u64,
-    status_padding: u64,
-    status_edge_padding: u64,
+    pub id: String,
+    pub mode: BarMode,
+    pub position: BarPosition,
+    pub status_command: String,
+    pub font: String,
+    pub workspace_buttons: bool,
+    pub binding_mode_indicator: bool,
+    pub colors: BarColors,
+    pub gaps: BarGaps,
+    pub bar_height: u64,
+    pub status_padding: u64,
+    pub status_edge_padding: u64,
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -163,57 +163,57 @@ enum BarMode { Dock, Hide, Invisible }
 enum BarPosition { Bottom, Top }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct BarColors {
-    background: Color,
-    statusline: Color,
-    separator: Color,
+    pub background: Color,
+    pub statusline: Color,
+    pub separator: Color,
 
-    focused_background: Color,
-    focused_statusline: Color,
-    focused_separator: Color,
+    pub focused_background: Color,
+    pub focused_statusline: Color,
+    pub focused_separator: Color,
 
-    focused_workspace_text: Color,
-    focused_workspace_bg: Color,
-    focused_workspace_border: Color,
+    pub focused_workspace_text: Color,
+    pub focused_workspace_bg: Color,
+    pub focused_workspace_border: Color,
 
-    active_workspace_text: Color,
-    active_workspace_bg: Color,
-    active_workspace_border: Color,
+    pub active_workspace_text: Color,
+    pub active_workspace_bg: Color,
+    pub active_workspace_border: Color,
 
-    inactive_workspace_text: Color,
-    inactive_workspace_bg: Color,
-    inactive_workspace_border: Color,
+    pub inactive_workspace_text: Color,
+    pub inactive_workspace_bg: Color,
+    pub inactive_workspace_border: Color,
 
-    urgent_workspace_text: Color,
-    urgent_workspace_bg: Color,
-    urgent_workspace_border: Color,
+    pub urgent_workspace_text: Color,
+    pub urgent_workspace_bg: Color,
+    pub urgent_workspace_border: Color,
 
-    binding_mode_text: Color,
-    binding_mode_bg: Color,
-    binding_mode_border: Color,
+    pub binding_mode_text: Color,
+    pub binding_mode_bg: Color,
+    pub binding_mode_border: Color,
 }
 #[derive(Debug, PartialEq)]
 pub struct Color {
-    r: u8,
-    g: u8,
-    b: u8,
-    a: u8
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
+    pub a: u8
 }
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct BarGaps {
-    top: u64,
-    right: u64,
-    bottom: u64,
-    left: u64
+    pub top: u64,
+    pub right: u64,
+    pub bottom: u64,
+    pub left: u64
 }
 
 // Get Version
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Version {
-    major: u64,
-    minor: u64,
-    patch: u64,
-    human_readable: String,
-    loaded_config_file_name: String
+    pub major: u64,
+    pub minor: u64,
+    pub patch: u64,
+    pub human_readable: String,
+    pub loaded_config_file_name: String
 }
 
 //Get Config
@@ -231,46 +231,46 @@ pub struct BindingState {
 #[derive(Deserialize, Debug, Default, PartialEq)]
 #[serde(default)]
 pub struct Input {
-    identifier: String,
-    name: String,
-    vendor: u64,
-    product: u64,
+    pub identifier: String,
+    pub name: String,
+    pub vendor: u64,
+    pub product: u64,
     #[serde(rename = "type")]
-    input_type: String,
+    pub input_type: String,
     #[serde(rename = "xkb_active_layout_name")]
-    layout: Option<String>,
+    pub layout: Option<String>,
     #[serde(rename = "xkb_layout_names")]
-    layouts: Option<Vec<String>>,
+    pub layouts: Option<Vec<String>>,
     #[serde(rename = "xkb_active_layout_index")]
-    layout_index: u64,
-    libinput: InputSettings
+    pub layout_index: u64,
+    pub libinput: InputSettings
 }
 #[derive(Deserialize, Debug, Default, PartialEq)]
 #[serde(default)]
 pub struct InputSettings {
-    send_events: Option<InputSendEvents>,
+    pub send_events: Option<InputSendEvents>,
     #[serde(deserialize_with = "is_enabled")]
-    tap: Option<bool>,
+    pub tap: Option<bool>,
     #[serde(deserialize_with = "is_enabled")]
-    tap_button_map: Option<bool>,
+    pub tap_button_map: Option<bool>,
     #[serde(deserialize_with = "is_enabled")]
-    tap_drag: Option<bool>,
+    pub tap_drag: Option<bool>,
     #[serde(deserialize_with = "is_enabled")]
-    tap_drag_lock: Option<bool>,
-    accel_speed: Option<f64>,
-    accel_profile: Option<InputAccelProfile>,
+    pub tap_drag_lock: Option<bool>,
+    pub accel_speed: Option<f64>,
+    pub accel_profile: Option<InputAccelProfile>,
     #[serde(deserialize_with = "is_enabled")]
-    natural_scroll: Option<bool>,
+    pub natural_scroll: Option<bool>,
     #[serde(deserialize_with = "is_enabled")]
-    left_handed: Option<bool>,
-    click_method: Option<InputClickMethod>,
+    pub left_handed: Option<bool>,
+    pub click_method: Option<InputClickMethod>,
     #[serde(deserialize_with = "is_enabled")]
-    middle_emulation: Option<bool>,
-    scroll_method: Option<InputScrollMethod>,
-    scroll_button: Option<u64>,
+    pub middle_emulation: Option<bool>,
+    pub scroll_method: Option<InputScrollMethod>,
+    pub scroll_button: Option<u64>,
     #[serde(deserialize_with = "is_enabled")]
-    dwt: Option<bool>,
-    calibration_matrix: Option<[f32; 6]>
+    pub dwt: Option<bool>,
+    pub calibration_matrix: Option<[f32; 6]>
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -305,10 +305,10 @@ pub enum InputScrollMethod {
 // Get Seats
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Seat  {
-    name: String,
-    capabilities: u64,
-    focus: u64,
-    devices: Vec<Input>
+    pub name: String,
+    pub capabilities: u64,
+    pub focus: u64,
+    pub devices: Vec<Input>
 }
 
 // Custom deserializer
