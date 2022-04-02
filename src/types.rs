@@ -6,11 +6,17 @@ extern crate serde_repr;
 use serde::Deserializer;
 use serde_repr::Deserialize_repr;
 
+pub enum CommandError {
+    ParseError,
+    Failed,
+}
+
 // Response structs
 // Run Command
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct CommandResult {
     pub success: bool,
+    pub parse_error: Option<bool>,
     pub error: Option<String>
 }
 
@@ -43,12 +49,12 @@ pub struct Output {
     pub active: bool,
     pub dpms: bool,
     pub primary: bool,
-    pub scale: f64,
-    pub subpixel_hinting: SubpixelHinting,
-    pub transform: OutputTransform,
-    pub current_workspace: String,
+    pub scale: Option<f64>,
+    pub subpixel_hinting: Option<SubpixelHinting>,
+    pub transform: Option<OutputTransform>,
+    pub current_workspace: Option<String>,
     pub modes: Vec<OutputMode>,
-    pub current_mode: OutputMode,
+    pub current_mode: Option<OutputMode>,
     pub rect: Rectangle
 }
 #[derive(Deserialize, Debug, PartialEq)]
@@ -82,7 +88,7 @@ pub struct OutputMode {
 #[derive(Deserialize, Debug, PartialEq)]
 pub struct Node {
     pub id: u64,
-    pub name: String,
+    pub name: Option<String>,
     #[serde(rename = "type")]
     pub node_type: NodeType,
     pub border: NodeBorder,
@@ -145,7 +151,7 @@ pub struct Bar {
     pub id: String,
     pub mode: BarMode,
     pub position: BarPosition,
-    pub status_command: String,
+    pub status_command: Option<String>,
     pub font: String,
     pub workspace_buttons: bool,
     pub binding_mode_indicator: bool,
@@ -249,27 +255,19 @@ pub struct Input {
 #[serde(default)]
 pub struct InputSettings {
     pub send_events: Option<InputSendEvents>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub tap: Option<bool>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub tap_button_map: Option<bool>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub tap_drag: Option<bool>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub tap_drag_lock: Option<bool>,
+    pub tap: Option<Toggle>,
+    pub tap_button_map: Option<TapButtonMap>,
+    pub tap_drag: Option<Toggle>,
+    pub tap_drag_lock: Option<Toggle>,
     pub accel_speed: Option<f64>,
     pub accel_profile: Option<InputAccelProfile>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub natural_scroll: Option<bool>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub left_handed: Option<bool>,
+    pub natural_scroll: Option<Toggle>,
+    pub left_handed: Option<Toggle>,
     pub click_method: Option<InputClickMethod>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub middle_emulation: Option<bool>,
+    pub middle_emulation: Option<Toggle>,
     pub scroll_method: Option<InputScrollMethod>,
     pub scroll_button: Option<u64>,
-    #[serde(deserialize_with = "is_enabled")]
-    pub dwt: Option<bool>,
+    pub dwt: Option<Toggle>,
     pub calibration_matrix: Option<[f32; 6]>
 }
 #[derive(Deserialize, Debug, PartialEq)]
@@ -279,6 +277,18 @@ pub enum InputSendEvents {
     Disabled,
     #[serde(rename = "disabled_on_external_mouse")]
     DisabledOnExternalMouse
+}
+#[derive(Deserialize, Debug, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum TapButtonMap {
+    LMR,
+    LRM
+}
+#[derive(Deserialize, Debug, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum Toggle {
+    Enabled,
+    Disabled,
 }
 #[derive(Deserialize, Debug, PartialEq)]
 #[serde(rename_all = "lowercase")]
@@ -318,7 +328,7 @@ impl<'de> serde::de::Deserialize<'de> for Color {
         D: Deserializer<'de>,
     {
         let s: &str = serde::de::Deserialize::deserialize(deserializer)?;
-        //assert!(s[0] == "#", "Invalid colorcode format");
+        debug_assert!(s.starts_with("#"), "Invalid colorcode format");
         // Read
         Ok(Color{
             r: u8::from_str_radix(&s[1..2], 16).unwrap(),
@@ -329,15 +339,3 @@ impl<'de> serde::de::Deserialize<'de> for Color {
     }
 }
 
-fn is_enabled<'de, D>(deserializer: D) -> Result<std::option::Option<bool>, D::Error>
-where
-    D: Deserializer<'de>,
-{
-    let s: &str = serde::de::Deserialize::deserialize(deserializer)?;
-    match s {
-        "enabled" => Ok(Some(true)),
-        "disabled" => Ok(Some(false)),
-        "" => Ok(None),
-        _ => panic!("Invalid value in enabled field"),
-    }
-}
